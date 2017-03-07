@@ -28,7 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        
+        GithubAPIClient.getRepositories { repos in
+            print("all good")
+            //print(repos)
+        }
         
         return true
     }

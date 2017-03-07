@@ -10,7 +10,38 @@ import UIKit
 
 class GithubAPIClient {
     
+    class func getRepositories(with completion: @escaping ([[String:Any]]) -> ()
+        ) {
+        
+        let urlString = "https://api.github.com/repositories?\(clientID)=YOUR_KEY&\(clientSecret)=YOUR_SECRET"
+        print(urlString)
+        if let url = URL(string: urlString) {
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: url, completionHandler: {(data, response, error) in
+                
+                if let unWrappedData = data {
+                    print(unWrappedData)
+                    
+                    do {
+                        let responseJSON = try JSONSerialization.jsonObject(with: unWrappedData, options: []) as? [[String:Any]] ?? [[:]]
+                        //print("response json \n\n \(responseJSON)")
+                        
+                        completion(responseJSON)
+                        }
+                    catch {
+                        
+                    }
+                    
+                }
+                
+            })
+            
+            dataTask.resume()
+        }
+        
+    }
 }
-    
+
+
 
 
